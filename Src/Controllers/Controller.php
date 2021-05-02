@@ -7,7 +7,6 @@ abstract class Controller
     {
         // On extrait le contenu de $donnees
         extract($donnees);
-
         // On démarre le buffer de sortie
         ob_start();
         // A partir de ce point toute sortie est conservée en mémoire

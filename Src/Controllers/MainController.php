@@ -11,7 +11,7 @@ class MainController extends Controller {
     
     public function index() {
         
-        echo '<h1>La page d\'accueil du site</h1>';
+        $this->render('index');
     }
     
     

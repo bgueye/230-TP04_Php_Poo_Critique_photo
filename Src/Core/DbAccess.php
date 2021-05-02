@@ -2,7 +2,6 @@
 
 namespace App\Src\Core;
 
-// On "importe" PDO
 use PDO;
 use PDOException;
 

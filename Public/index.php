@@ -2,6 +2,7 @@
 use App\Autoloader;
 use App\Src\Core\Main;
 
+define('ROOT', __DIR__);
 
 // On importe l'autoloader
 require_once '../Autoloader.php';
