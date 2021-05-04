@@ -3,8 +3,12 @@
 
 namespace App\Src\Controllers;
 
+use Exception;
+use App\Src\Core\FormBuilder;
+use App\Src\Models\CommentModel;
 use App\Src\Models\PhotoModel;
-use App\Src\Models\Entity\Photo;
+use App\Src\Models\UserModel;
+
 /**
  * PhotoController pour le traitement des photos et commentaies
  *
@@ -21,19 +25,112 @@ class PhotoController extends Controller {
     }
     
     public function voir($id) {
-        $model = new PhotoModel();
-        $photo = $model->find($id);
         
+        if (!empty($_POST['contenu'])){
+        $contenu = filter_input(INPUT_POST, 'contenu', FILTER_SANITIZE_SPECIAL_CHARS);
+
+            $user = new UserModel;
+            $currentUser = $user->findByLogin($_SESSION['login']);
+            $idUser = $currentUser->id;
+            
+            $newComment = new CommentModel;
+            
+            $newComment->setContenu($contenu);
+            $newComment->setidPhoto($id);
+            $newComment->setUser($idUser);
+            $newComment->setVisible(1);
+            $newComment->create();
+
+        }
+
+        $modelPhoto = new PhotoModel();
+        $photo = $modelPhoto->find($id);
+
+
+        $modelComment = new CommentModel;
+        $Comments = $modelComment->findByPhotoId($photo->id);
         //$tab = get_object_vars($photo);
         
-        $this->render('photo/voirPhoto', ['photo' => $photo]);
+        $this->render('photo/voirPhoto', [
+            'photo' => $photo,
+            'comments' => $Comments
+        ]);
     }
     
-    public function newComment() {
-        
-    }
+
 
     public function newPhoto(){
-        
+
+        //var_dump($_POST);
+        //print_r($_FILES);
+        if (FormBuilder::validate($_POST, ['titre']) && isset($_FILES['photo']) && $_FILES['photo']['name'] <= 5000000)
+        { 
+            // Testons si le fichier n'est pas trop gros
+            if ($_FILES['photo']['size'] <= 5000000)
+            {
+                // Testons si l'extension est autorisée
+                $infosfichier = pathinfo($_FILES['photo']['name']);
+                $extension_upload = $infosfichier['extension'];
+                $extensions_autorisees = array('jpg', 'jpeg', 'gif', 'png');
+                if (in_array($extension_upload, $extensions_autorisees))
+                {
+                    $titre = filter_input(INPUT_POST, 'titre', FILTER_SANITIZE_SPECIAL_CHARS);
+
+                    try{
+                        $namePhoto = 'photos/'. basename($_FILES['photo']['name']);
+                        $user = new UserModel;
+                        $currentUser = $user->findByLogin($_SESSION['login']);
+                        $idUser = $currentUser->id;
+
+                        $newPhoto = new PhotoModel;
+                        $newPhoto->setTitlePhoto($titre);
+                        $newPhoto->setNameFile($namePhoto);
+                        $newPhoto->setidUser($idUser);
+                        
+                        $newPhoto->create();
+                        // On peut valider le fichier et le stocker définitivement
+                        move_uploaded_file($_FILES['photo']['tmp_name'], $namePhoto);
+                    }catch(Exception $e){
+                        $e->getMessage();
+                    }
+                }
+            }
+              
+        }
+
+
+
+
+        $formPhoto = new FormBuilder;
+
+        // On ajoute chacune des parties qui nous intéressent
+        $formPhoto->debutForm('post', '#', ['enctype' => 'multipart/form-data'])
+            ->ajoutLabelFor('titre', 'Titre')
+            ->ajoutInput('text', 'titre', ['id' => 'tire', 'class' => 'form-control'])
+            ->ajoutLabelFor('photo', '')
+            ->ajoutInput('file', 'photo', ['id' => 'photo','accept' =>'.png, .jpg, .jpeg', 'class' => 'form-control'])
+            ->ajoutBouton('Ajouter', ['class' => 'btn btn-primary btn-sm'])
+            ->finForm();
+
+        // On envoie le formulaire à la vue en utilisant notre méthode "create"
+        $this->render('photo/formPhoto', ['newPhotoForm' => $formPhoto->create()]);
+    }
+
+    public function newComment()
+    {
+        $formPhoto = new FormBuilder;
+
+        // On ajoute chacune des parties qui nous intéressent
+        $formPhoto->debutForm()
+            ->ajoutLabelFor('pseudo', 'Pseudo')
+            ->ajoutInput('text', 'titre', ['id' => 'tire', 'class' => 'form-control'])
+            ->ajoutLabelFor('photo', '')
+            ->ajoutInput('file', 'photo', ['id' => 'photo','accept' =>'.png, .jpg, .jpeg', 'class' => 'form-control'])
+            ->ajoutBouton('Ajouter', ['class' => 'btn btn-primary btn-sm'])
+            ->finForm();
+
+        // On envoie le formulaire à la vue en utilisant notre méthode "create"
+        $this->render('photo/formPhoto', ['newPhotoForm' => $formPhoto->create()]);
+
     }
 }

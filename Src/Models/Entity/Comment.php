@@ -7,11 +7,11 @@ use App\Src\Models\Model;
 class Comment extends Model
 {
     private  $id;
-    private $contenu;
+    private $comment;
     private $createAt;
     private $visible;
-    private $user;
-    private $photo;
+    private $id_user;
+    private $id_photo;
     
     public function __construct() {
         $this->table = 'comments';
@@ -24,7 +24,7 @@ class Comment extends Model
     }
 
     function getContenu() {
-        return $this->contenu;
+        return $this->comment;
     }
 
     function getCreateAt() {
@@ -40,7 +40,7 @@ class Comment extends Model
     }
 
     function setContenu($contenu): void {
-        $this->contenu = $contenu;
+        $this->comment = $contenu;
     }
 
     function setCreateAt($createAt): void {
@@ -52,29 +52,52 @@ class Comment extends Model
     }
 
         
-    public function setPhoto(Photo $photo)
+    public function setidPhoto($photo)
     {
-        $this->photo = $photo;
+        $this->id_photo = $photo;
 
         return $this;
     }
     
     public function getPhoto()
     {
-        return $this->photo;
+        return $this->id_photo;
     }
 
     
-    public function setUser(User $user)
+    public function setUser($user)
     {
-        $this->user = $user;
+        $this->id_user = $user;
 
         return $this;
     }
 
     public function getUser()
     {
-        return $this->user;
+        return $this->id_user;
     }
 
+
+    public function create()
+    {
+       
+        $champs = [];
+        $inter = [];
+        $valeurs = [];
+
+        // On boucle pour les propriétés pour les mettre dans un tableau
+        foreach ($this as $champ => $valeur) {
+            if ($valeur !== null && $champ != 'db' && $champ != 'table' && $champ != 'createAt') {
+                $champs[] = $champ;
+                $inter[] = "?";
+                $valeurs[] = $valeur;
+            }
+        }
+        
+        // On transforme le tableau "champs" en une chaine de caractères
+        $liste_champs = implode(', ', $champs);
+        $liste_inter = implode(', ', $inter);
+        // On exécute la requête
+        return $this->requete('INSERT INTO ' . $this->table . ' (' . $liste_champs . ') VALUES (' . $liste_inter . ')', $valeurs);   
+    }
 }

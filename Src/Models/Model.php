@@ -4,7 +4,7 @@ namespace App\Src\Models;
 
 use App\Src\Core\DbAccess;
 
-class Model extends DbAccess
+abstract class Model extends DbAccess
 {
     // Table de la base de données
     protected $table;
@@ -39,6 +39,11 @@ class Model extends DbAccess
         return $query->fetchAll();
     }
 
+
+    public function findByLogin(string $login)
+    {
+        return $this->requete("SELECT * FROM {$this->table} WHERE login = ?", [$login])->fetch();
+    }
     
 
     public function find(int $id)
@@ -50,6 +55,13 @@ class Model extends DbAccess
     {
         return $this->requete("DELETE FROM {$this->table} WHERE id = ?", [$id])->fetch();
     }
+
+    public function hydrate($donnees)
+    {
+
+    }
+
+    abstract public function create();
     
     
 
