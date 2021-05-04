@@ -11,5 +11,11 @@ use App\Src\Models\Entity\Comment;
  */
 class CommentModel extends Comment
 {
-    //put your code here
+    public function findByPhotoId($id)
+    {
+        $photos = $this->requete('SELECT * FROM comments 
+        JOIN photos ON comments.id_photo = photos.id
+        WHERE comments.id_photo = '.$id);
+        return $photos->fetchAll();
+    }
 }

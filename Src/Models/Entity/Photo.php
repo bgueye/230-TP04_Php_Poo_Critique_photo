@@ -7,18 +7,16 @@ use App\Src\Models\Model;
 class Photo extends Model
 {
     private $id;
-    private $titlePhoto;
-    private $nameFile;
+    private $title_photo;
+    private $name_file;
     private $postedAt;
     private $publication;
-    private $user;
-    private $comments;
+    private $id_user;
     
     public function __construct() {
         $this->table = 'photos';
         $this->postedAt = new \Datetime(); // Par défaut, la date d'ajout est la date d'aujourd'hui
         $this->publication = true;
-        $this->comments = new \ArrayObject;
     
     }
     
@@ -27,11 +25,11 @@ class Photo extends Model
     }
 
     function getTitlePhoto() {
-        return $this->titlePhoto;
+        return $this->title_photo;
     }
 
     function getNameFile() {
-        return $this->nameFile;
+        return $this->name_file;
     }
 
     function getPostedAt() {
@@ -47,11 +45,11 @@ class Photo extends Model
     }
 
     function setTitlePhoto($titlePhoto): void {
-        $this->titlePhoto = $titlePhoto;
+        $this->title_photo = $titlePhoto;
     }
 
     function setNameFile($nameFile): void {
-        $this->nameFile = $nameFile;
+        $this->name_file = $nameFile;
     }
 
     function setPostedAt($postedAt): void {
@@ -62,18 +60,40 @@ class Photo extends Model
         $this->publication = $publication;
     }
     
-    public function setUser(User $user)
+    public function setidUser($user)
     {
-        $this->user = $user;
+        $this->id_user = $user;
 
         return $this;
     }
     public function getUser()
     {
-        return $this->user;
+        return $this->id_user;
     }
     
+    public function create()
+    {
+       
+        $champs = [];
+        $inter = [];
+        $valeurs = [];
 
-
+        // On boucle pour les propriétés pour les mettre dans un tableau
+        foreach ($this as $champ => $valeur) {
+            if ($valeur !== null && $champ != 'db' && $champ != 'table' && $champ != 'postedAt' && $champ != 'publication') {
+                $champs[] = $champ;
+                $inter[] = "?";
+                $valeurs[] = $valeur;
+            }
+        }
+        
+        // On transforme le tableau "champs" en une chaine de caractères
+        $liste_champs = implode(', ', $champs);
+        $liste_inter = implode(', ', $inter);
+        //var_dump($liste_champs);
+        //var_dump($liste_inter);
+        // On exécute la requête
+        return $this->requete('INSERT INTO ' . $this->table . ' (' . $liste_champs . ') VALUES (' . $liste_inter . ')', $valeurs);   
+    }
 
 }

@@ -25,42 +25,64 @@ class User extends Model
         return $this->id;
     }
 
-    function getLogin() {
+    public function getLogin() {
         return $this->login;
     }
 
-    function getPsw() {
+    public function getPsw() {
         return $this->psw;
     }
 
-    function getPseudo() {
+    public function getPseudo() {
         return $this->pseudo;
     }
 
-    function getRoles() {
+    public function getRoles() {
         return $this->roles;
     }
 
-    function setIdUser($id_user): void {
+    public function setIdUser($id_user): void {
         $this->id = $id_user;
     }
 
-    function setLogin($login): void {
+    public function setLogin($login): void {
         $this->login = $login;
     }
 
-    function setPsw($psw): void {
+    public function setPsw($psw): void {
         $this->psw = $psw;
     }
 
-    function setPseudo($pseudo): void {
+    public function setPseudo($pseudo): void {
         $this->pseudo = $pseudo;
     }
 
-    function setRoles($roles): void {
+    public function setRoles($roles): void {
         $this->roles = $roles;
     }
 
+    public function create()
+    {
+       
+        $champs = [];
+        $inter = [];
+        $valeurs = [];
 
+        // On boucle pour les propriétés pour les mettre dans un tableau
+        foreach ($this as $champ => $valeur) {
+            if ($valeur !== null && $champ != 'db' && $champ != 'table' && $champ != 'comments' && $champ != 'photos') {
+                $champs[] = $champ;
+                $inter[] = "?";
+                $valeurs[] = $valeur;
+            }
+        }
+        
+        // On transforme le tableau "champs" en une chaine de caractères
+        $liste_champs = implode(', ', $champs);
+        $liste_inter = implode(', ', $inter);
+        var_dump($liste_champs);
+        // On exécute la requête
+        return $this->requete('INSERT INTO ' . $this->table . ' (' . $liste_champs . ') VALUES (' . $liste_inter . ')', $valeurs);   
+    }
     
 }
