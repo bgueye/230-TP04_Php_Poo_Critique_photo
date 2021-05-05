@@ -80,7 +80,7 @@ class User extends Model
         // On transforme le tableau "champs" en une chaine de caractères
         $liste_champs = implode(', ', $champs);
         $liste_inter = implode(', ', $inter);
-        var_dump($liste_champs);
+        //var_dump($liste_champs);
         // On exécute la requête
         return $this->requete('INSERT INTO ' . $this->table . ' (' . $liste_champs . ') VALUES (' . $liste_inter . ')', $valeurs);   
     }
