@@ -133,4 +133,58 @@ class PhotoController extends Controller {
         $this->render('photo/formPhoto', ['newPhotoForm' => $formPhoto->create()]);
 
     }
+
+    public function delatePhoto()
+    {
+        if (!empty($_GET['id'])){
+            $idPhoto = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+
+            //on vérifie si la photo existe dans la base de données
+            //et si c'est une photo de l'utilisateur connecté
+            $model = new PhotoModel;
+            $photo = $model->find($idPhoto);
+            //var_dump($photo);
+            if (!empty($photo) && $photo->id_user == $_SESSION['id']){
+
+                //On doit supprimer d'abord tous les commentaires de cette photo
+                try{
+                     $model->delete($idPhoto);
+                }catch(Exception $e){
+                    echo 'Veuillez penser à supprimer d\'abord les commentaires liés !';
+                    die();
+                }
+               
+            }
+            header('Location: index.php?entite=user');
+            
+        }
+        
+    }
+
+
+    public function delateComment()
+    {
+        if (!empty($_GET['id'])){
+            $idComment = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+
+            //on vérifie si le commentaire existe dans la base de données
+            //et si c'est un commentaire de l'utilisateur connecté
+            $model = new CommentModel;
+            $comment = $model->find($idComment);
+            //var_dump($comment);
+            //die();
+            if (!empty($comment) && $comment->id_user == $_SESSION['id']){
+
+                try{
+                    $model->delete($idComment);
+                }catch(Exception $e){
+                    $e->getMessage();
+                }
+               
+            }
+            header('Location: index.php?entite=user');
+            
+        }
+        
+    }
 }

@@ -14,7 +14,6 @@ class CommentModel extends Comment
     public function findByPhotoId($id)
     {
         $photos = $this->requete('SELECT * FROM comments 
-        JOIN photos ON comments.id_photo = photos.id
         WHERE comments.id_photo = '.$id);
         return $photos->fetchAll();
     }

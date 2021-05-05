@@ -75,6 +75,7 @@ class UserController extends Controller
             $_SESSION['pseudo'] = $user->getPseudo();
             $_SESSION['login'] = $user->getLogin();
             $_SESSION['roles'] = $user->getRoles();
+            $_SESSION['id'] = $user->getIdUser();
             
             //var_dump($_SESSION);
             //die();

@@ -56,12 +56,13 @@ abstract class Model extends DbAccess
         return $this->requete("DELETE FROM {$this->table} WHERE id = ?", [$id])->fetch();
     }
 
-    public function hydrate($donnees)
-    {
-
-    }
+    
 
     abstract public function create();
+    
+    abstract public function update();
+
+    
     
     
 

@@ -96,4 +96,26 @@ class Photo extends Model
         return $this->requete('INSERT INTO ' . $this->table . ' (' . $liste_champs . ') VALUES (' . $liste_inter . ')', $valeurs);   
     }
 
+    public function update()
+    {
+        $champs = [];
+        $valeurs = [];
+
+        // On boucle pour éclater le tableau
+        foreach ($this as $champ => $valeur) {
+            // UPDATE annonces SET titre = ?, description = ?, actif = ? WHERE id= ?
+            if ($valeur !== null && $champ != 'db' && $champ != 'table' && $champ != 'postedAt' && $champ != 'publication') {
+                $champs[] = "$champ = ?";
+                $valeurs[] = $valeur;
+            }
+        }
+        $valeurs[] = $this->id;
+
+        // On transforme le tableau "champs" en une chaine de caractères
+        $liste_champs = implode(', ', $champs);
+
+        // On exécute la requête
+        return $this->requete('UPDATE ' . $this->table . ' SET ' . $liste_champs . ' WHERE id = ?', $valeurs);
+    }
+
 }
