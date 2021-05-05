@@ -150,8 +150,7 @@ class PhotoController extends Controller {
                 try{
                      $model->delete($idPhoto);
                 }catch(Exception $e){
-                    echo 'Veuillez penser à supprimer d\'abord les commentaires liés !';
-                    die();
+                    $e->getMessage();
                 }
                
             }
