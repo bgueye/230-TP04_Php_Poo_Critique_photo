@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row">
-    <div class="col-sm-8">
+    <div class="col-sm-8 col-md-10 mx-auto">
       <div class="card">
         <img class="card-img-top" src="<?= $photo->name_file ?>" alt="Card image cap">
         <div class="card-body">
@@ -11,7 +11,7 @@
               <a href="index.php?entite=photo&action=delatePhoto&id=<?= $photo->id ?>" class="badge btn-danger">Supprimer</a>
             <?php } ?>
           </p>
-
+          <div class="card-footer">
           <?php foreach ($comments as $comment) { ?>
             <div class="card">
               <div class="card-body">
@@ -26,7 +26,7 @@
           <?php
           }
           ?>
-
+          </div>
 
 
         </div>
