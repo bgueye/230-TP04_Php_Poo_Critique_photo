@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row">
-    <div class="col-sm-8 col-md-10 mx-auto">
+    <div class="col-sm-8 col-md-9 mx-auto">
       <div class="card">
         <img class="card-img-top" src="<?= $photo->name_file ?>" alt="Card image cap">
         <div class="card-body">
@@ -34,7 +34,8 @@
     </div>
     <?php if (!empty($_SESSION['login'])) {
       echo '
-    <div class="col-sm-4">
+    <div class="col-sm-3">
+    <p>Ajoutez un nouveau commentaire</p>
     <div class="card">
     <form action="#" method="post">
       <label for="pseudo">Pseudo</label>
