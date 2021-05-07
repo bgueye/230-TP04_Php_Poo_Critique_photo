@@ -40,7 +40,7 @@
                     </li>
                     <?php if (!empty($_SESSION['login'])) { ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="index.php?entite=user">Mes photos</a>
+                            <a class="nav-link" href="index.php?entite=photo&action=mesPhotos">Mes photos</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="index.php?entite=photo&action=newPhoto">Nouvelle photo</a>

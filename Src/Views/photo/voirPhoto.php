@@ -1,25 +1,24 @@
+<?php //var_dump($_SERVER); ?>
 <div class="container">
   <div class="row">
     <div class="col-sm-8 col-md-9 mx-auto">
       <div class="card">
         <img class="card-img-top" src="<?= $photo->name_file ?>" alt="Card image cap">
         <div class="card-body">
-          <h5 class="card-title"><?= $photo->title_photo ?></h5>
-          <p class="card-text">
-            <small class="text-muted">Last updated <?= $photo->post_at ?></small>
-            <?php if (!empty($_SESSION['login'])) { ?>
+          <h5 class="card-title text-center"><?= $photo->title_photo ?></h5>
+          <small class="text-muted">Publiée le <?= $photo->post_at ?></small>
+            <?php if (!empty($_SESSION['login']) && $_SESSION['id'] === $photo->id_user) { ?>
               <a href="index.php?entite=photo&action=delatePhoto&id=<?= $photo->id ?>" class="badge btn-danger">Supprimer</a>
             <?php } ?>
-          </p>
           <div class="card-footer">
-          <?php foreach ($comments as $comment) { ?>
+          <?php foreach ($comments as $comment){ ?>
+          
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title"><?php if (!empty($_SESSION['pseudo'])) { echo $_SESSION['pseudo']; } ?></h5>
-                <p class="card-text"><small class="text-muted">Publié le : <?= $comment->create_at ?></small></p>
-                <p class="card-text">Commentaire : <?= $comment->comment ?></p>
-                <?php if (!empty($_SESSION['login'])) { ?>
-                  <small class="badge btn-danger"><a href="index.php?entite=photo&action=delateComment&id=<?= $comment->id ?>">Supprimer</a></small>
+                <p style="margin-top: 0;" class="card-text">Publié par <strong><?= $comment->pseudo ?></strong><br><small class="text-muted"> le : <?= $comment->create_at ?></small></p>
+                <p style="margin-top: 0;" class="card-text">Commentaire : <?= $comment->comment ?></p>
+                <?php if (!empty($_SESSION['login']) && $_SESSION['login'] === $comment->login) { ?>
+                  <a class="badge btn-danger" href="index.php?entite=photo&action=delateComment&id=<?= $comment->id ?>">Supprimer</a>
                 <?php } ?>
               </div>
             </div>
@@ -35,7 +34,7 @@
     <?php if (!empty($_SESSION['login'])) {
       echo '
     <div class="col-sm-3">
-    <p>Ajoutez un nouveau commentaire</p>
+    <p>Ajoutez un commentaire</p>
     <div class="card">
     <form action="#" method="post">
       <label for="pseudo">Pseudo</label>

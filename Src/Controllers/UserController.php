@@ -17,19 +17,7 @@ class UserController extends Controller
 
     public function index()
     {
-        if (!isset($_SESSION['login'])) {
-            $this->connexion();
-            die();
-        }
-
-        $user = new UserModel;
-        $currentUser = $user->findByLogin($_SESSION['login']);
-        $idUser = $currentUser->id;
-
-        $photo = new PhotoModel;
-
-        $photos = $photo->findPhotosByUser($idUser);
-        $this->render('photo/mesPhotos', ['photos' => $photos]);
+        header('Location: index.php?entite=photo&action=mesPhotos');
     }
 
     public function connexion()

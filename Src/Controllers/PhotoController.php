@@ -26,15 +26,33 @@ class PhotoController extends Controller
         $this->render('photo/viewPhoto', ['photos' => $photos]);
     }
 
+
+    public function mesPhotos()
+    {
+        if (!isset($_SESSION['login'])) {
+            $controller = new UserController;
+            header('Location: index.php?entite=user&action=connexion');
+        }
+
+        $user = new UserModel;
+        $currentUser = $user->findByLogin($_SESSION['login']);
+        $idUser = $currentUser->id;
+
+        $photo = new PhotoModel;
+
+        $photos = $photo->findPhotosByUser($idUser);
+        $this->render('photo/viewPhoto', ['photos' => $photos]);
+    }
+
+
+
     public function voir($id)
     {
 
-        if (!empty($_POST['contenu'])) {
+        if (isset($_POST) && !empty($_POST['contenu'])) {
             $contenu = filter_input(INPUT_POST, 'contenu', FILTER_SANITIZE_SPECIAL_CHARS);
 
-            $user = new UserModel;
-            $currentUser = $user->findByLogin($_SESSION['login']);
-            $idUser = $currentUser->id;
+            $idUser = $_SESSION['id'];
 
             $newComment = new CommentModel;
 
@@ -45,17 +63,18 @@ class PhotoController extends Controller
             $newComment->create();
         }
 
+        //On récupère la photo
         $modelPhoto = new PhotoModel();
         $photo = $modelPhoto->find($id);
 
-
+        //et ses commentaires
         $modelComment = new CommentModel;
-        $Comments = $modelComment->findByPhotoId($photo->id);
+        $comments = $modelComment->findByPhotoId($photo->id);
         //$tab = get_object_vars($photo);
 
         $this->render('photo/voirPhoto', [
             'photo' => $photo,
-            'comments' => $Comments
+            'comments' => $comments
         ]);
     }
 
@@ -146,9 +165,10 @@ class PhotoController extends Controller
                 try {
                     $model->delete($idPhoto);
                 } catch (Exception $e) {
-                    $e->getMessage();
+                    $erreur = ('Vous ne pouvez pas supprimer cette photo !');
                 }
             }
+            
             header('Location: index.php?entite=user');
         }
     }
@@ -165,15 +185,16 @@ class PhotoController extends Controller
             $comment = $model->find($idComment);
             //var_dump($comment);
             //die();
-            if (!empty($comment) && $comment->id_user == $_SESSION['id']) {
+            if (!empty($comment) && $comment->id_user === $_SESSION['id']) {
 
                 try {
                     $model->delete($idComment);
                 } catch (Exception $e) {
-                    $e->getMessage();
+                    $erreur = ('Impossible de supprimer ce commentaire !');
                 }
             }
-            header('Location: index.php?entite=user');
+            
+            header('Location: index.php?entite=photo&action=voir&id='.$comment->id_photo);
         }
     }
 }

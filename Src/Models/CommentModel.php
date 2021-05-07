@@ -13,8 +13,7 @@ class CommentModel extends Comment
 {
     public function findByPhotoId($id)
     {
-        $photos = $this->requete('SELECT * FROM comments 
-        WHERE comments.id_photo = '.$id);
+        $photos = $this->requete('SELECT comments.*, users.pseudo, users.login FROM comments, users WHERE comments.id_user = users.id AND comments.id_photo = '.$id);
         return $photos->fetchAll();
     }
 }
