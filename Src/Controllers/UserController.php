@@ -34,9 +34,9 @@ class UserController extends Controller
             ->ajoutLabelFor('email', 'Email')
             ->ajoutInput('email', 'email', ['id' => 'email', 'class' => 'form-control'])
             ->ajoutLabelFor('password', 'Mot de passe')
-            ->ajoutInput('password', 'password', ['id' => 'password', 'class' => 'form-control'])
+            ->ajoutInput('password', 'password', ['id' => 'password', 'class' => 'form-control mb-3'])
             ->ajoutInput('hidden', 'token', ['value' => $token])
-            ->ajoutBouton('Me connecter', ['class' => 'btn btn-primary btn-sm'])
+            ->ajoutBouton('Me connecter', ['class' => 'btn badge badge-primary'])
             ->finForm();
 
         // On envoie le formulaire à la vue en utilisant notre méthode "create"
@@ -111,9 +111,9 @@ class UserController extends Controller
             ->ajoutLabelFor('email', 'Email')
             ->ajoutInput('email', 'email', ['id' => 'email', 'class' => 'form-control'])
             ->ajoutLabelFor('password', 'Mot de passe')
-            ->ajoutInput('password', 'password', ['id' => 'password', 'class' => 'form-control'])
+            ->ajoutInput('password', 'password', ['id' => 'password', 'class' => 'form-control mb-3'])
             
-            ->ajoutBouton('M\'inscrire', ['class' => 'btn btn-primary btn-sm'])
+            ->ajoutBouton('M\'inscrire', ['class' => 'btn badge badge-primary'])
             ->finForm();
 
         // On envoie le formulaire à la vue en utilisant notre méthode "create"

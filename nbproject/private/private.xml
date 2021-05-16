@@ -2,6 +2,13 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/wamp64/www/230-TP04_Php_Poo_Critique_photo/Src/Controllers/PhotoController.php</file>
+            <file>file:/C:/wamp64/www/230-TP04_Php_Poo_Critique_photo/Src/Views/photo/formPhoto.php</file>
+            <file>file:/C:/wamp64/www/230-TP04_Php_Poo_Critique_photo/Src/Controllers/UserController.php</file>
+            <file>file:/C:/wamp64/www/230-TP04_Php_Poo_Critique_photo/Src/Views/photo/viewPhoto.php</file>
+            <file>file:/C:/wamp64/www/230-TP04_Php_Poo_Critique_photo/Src/Views/user/formConnexion.php</file>
+            <file>file:/C:/wamp64/www/230-TP04_Php_Poo_Critique_photo/Src/Views/photo/voirPhoto.php</file>
+        </group>
     </open-files>
 </project-private>

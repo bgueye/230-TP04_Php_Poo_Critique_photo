@@ -30,7 +30,6 @@ class PhotoController extends Controller
     public function mesPhotos()
     {
         if (!isset($_SESSION['login'])) {
-            $controller = new UserController;
             header('Location: index.php?entite=user&action=connexion');
         }
 
@@ -83,8 +82,6 @@ class PhotoController extends Controller
     public function newPhoto()
     {
 
-        //var_dump($_POST);
-        print_r($_FILES);
         if (FormBuilder::validate($_POST, ['titre']) && isset($_FILES['photo']) && $_FILES['photo']['size'] <= 5000000) {
 
             // Testons si l'extension est autorisée
@@ -114,9 +111,6 @@ class PhotoController extends Controller
             }
         }
 
-
-
-
         $formPhoto = new FormBuilder;
 
         // On ajoute chacune des parties qui nous intéressent
@@ -124,8 +118,8 @@ class PhotoController extends Controller
             ->ajoutLabelFor('titre', 'Titre')
             ->ajoutInput('text', 'titre', ['id' => 'tire', 'class' => 'form-control'])
             ->ajoutLabelFor('photo', '')
-            ->ajoutInput('file', 'photo', ['id' => 'photo', 'accept' => '.png, .jpg, .jpeg', 'class' => 'form-control'])
-            ->ajoutBouton('Ajouter', ['class' => 'btn btn-primary btn-sm'])
+            ->ajoutInput('file', 'photo', ['id' => 'photo', 'accept' => '.png, .jpg, .jpeg', 'class' => 'form-control mb-3'])
+            ->ajoutBouton('Ajouter', ['class' => 'btn badge badge-primary'])
             ->finForm();
 
         // On envoie le formulaire à la vue en utilisant notre méthode "create"
@@ -141,8 +135,8 @@ class PhotoController extends Controller
             ->ajoutLabelFor('pseudo', 'Pseudo')
             ->ajoutInput('text', 'titre', ['id' => 'tire', 'class' => 'form-control'])
             ->ajoutLabelFor('photo', '')
-            ->ajoutInput('file', 'photo', ['id' => 'photo', 'accept' => '.png, .jpg, .jpeg', 'class' => 'form-control'])
-            ->ajoutBouton('Ajouter', ['class' => 'btn btn-primary btn-sm'])
+            ->ajoutInput('file', 'photo', ['id' => 'photo', 'accept' => '.png, .jpg, .jpeg', 'class' => 'form-control mb-3'])
+            ->ajoutBouton('Ajouter', ['class' => 'btn badge badge-primary'])
             ->finForm();
 
         // On envoie le formulaire à la vue en utilisant notre méthode "create"

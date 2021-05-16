@@ -50,13 +50,13 @@
                         </li>
 
                 </ul>
-                <a class="btn btn-secondary btn-sm btn-danger" href="index.php?entite=user&action=deconnexion">Déconnexion</a>
+                <a class="btn badge badge-danger" href="index.php?entite=user&action=deconnexion">Déconnexion</a>
             <?php } else { ?>
                 <li class="nav-item">
                     <a class="nav-link" href="index.php?entite=user&action=newuser">Inscription</a>
                 </li>        
                 </ul>
-                <a class="btn btn-secondary btn-sm btn-success" href="index.php?entite=user&action=connexion">Connexion</a>
+                <a class="btn badge badge-success" href="index.php?entite=user&action=connexion">Connexion</a>
             <?php } ?>
             </div>
         </div>
