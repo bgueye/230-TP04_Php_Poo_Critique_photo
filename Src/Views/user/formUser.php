@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-sm-8 col-md-6 mx-auto">
 
-            <p>Inscription au club Critique Photo</p>
+            <p class="text-center">Inscription au club Critique Photo</p>
             <?= $newUserForm ?>
 
         </div>

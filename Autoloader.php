@@ -13,8 +13,8 @@ class Autoloader
 
     static function autoload($class)
     {
-        // On récupère dans $class la totalité du namespace de la classe concernée (App\Client\Compte)
-        // On retire App\ (Client\Compte)
+        // On récupère dans $class la totalité du namespace de la classe concernée (App\Models\Entity)
+        // On remplace App\ par ..
         $class = str_replace('App', '..', $class);
         
         // On remplace les \ par des /
