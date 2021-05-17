@@ -22,6 +22,7 @@ class NotFoundException extends Exception
         http_response_code(404);
         $contenu = '<div class = "mx-auto text-center"><p>L\'application est en maintenance ! <br>Réessayez plutard </p></div>';
         require '../Src/Views/default.php';
+        die();
     }
 
 }

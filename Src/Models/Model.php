@@ -3,6 +3,7 @@
 namespace App\Src\Models;
 
 use App\Src\Core\DbAccess;
+use App\Src\Exceptions\NotFoundException;
 
 abstract class Model extends DbAccess
 {
@@ -15,9 +16,12 @@ abstract class Model extends DbAccess
     
     public function requete(string $sql, array $attributs = null)
     {
-        // On récupère l'instance de Db
-        $this->db = DbAccess::getInstance();
-
+        try{
+            // On récupère l'instance de Db
+            $this->db = DbAccess::getInstance();
+        }catch(NotFoundException $e){
+            return $e->errorPDO();
+        }
         // On vérifie si on a des attributs
         if ($attributs !== null) {
             
