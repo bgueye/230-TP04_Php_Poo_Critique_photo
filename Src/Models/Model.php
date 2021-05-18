@@ -21,6 +21,7 @@ abstract class Model extends DbAccess
             $this->db = DbAccess::getInstance();
         }catch(NotFoundException $e){
             return $e->errorPDO();
+            die();
         }
         // On vérifie si on a des attributs
         if ($attributs !== null) {
